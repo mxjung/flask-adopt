@@ -7,12 +7,13 @@
   {% for pet in pets %}
   <span>
     <img src="{{pet.photo_url}}" alt="">
-    <a href="">
+    <a href="/{{pet.id}}">
       {{pet.name}}
     </a>
     is {{pet.available}}
   </span>
   {% endfor %}
+  <br><a href="/add">Add pet</a>
 </div>
 
 {% endblock %}
