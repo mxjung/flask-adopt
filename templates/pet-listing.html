@@ -1,17 +1,17 @@
 {% extends 'base.html' %}
 
-{% block title %}<h1>{{ title }}</h1>{% endblock %}
+{% block title %}<h1>MAX & BORIS ADOPTION AGENCY</h1>{% endblock %}
 
 {% block content %}
 <div>
   {% for pet in pets %}
-  <span>
+  <div>
     <img src="{{pet.photo_url}}" alt="">
     <a href="/{{pet.id}}">
       {{pet.name}}
     </a>
-    is {{pet.available}}
-  </span>
+     {% if pet.available %} <b> is available!</b> {% endif %}
+  </div>
   {% endfor %}
   <br><a href="/add">Add pet</a>
 </div>

@@ -6,7 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from models import db, connect_db, Pet
 
-from forms import AddPetForm
+from forms import AddPetForm, EditPetForm
 
 
 app = Flask(__name__)
@@ -30,12 +30,16 @@ toolbar = DebugToolbarExtension(app)
 
 @app.route('/')
 def index():
+    """goes to our main pet listing page"""
     pets = Pet.query.all()
     return render_template('pet-listing.html', pets=pets)
 
 
 @app.route('/add', methods=["POST", "GET"])
 def add_pet():
+
+    """goes to our add pet form and handles add pet event!"""
+
 
     form = AddPetForm()
 
@@ -44,7 +48,6 @@ def add_pet():
         pet_name = form.name.data
         species = form.species.data
         
-        validate_species(form,species)
 
         photo_url = form.photo_url.data or None
         age = form.age.data
@@ -54,7 +57,7 @@ def add_pet():
                       species=species,
                       photo_url=photo_url,
                       age=age,
-                      notes=notes
+                      notes=notes,
                       )
         db.session.add(new_pet)
         db.session.commit()
@@ -64,8 +67,29 @@ def add_pet():
 
     return redirect("/")
 
-@app.route('/<int:pet_id>')
+@app.route('/<int:pet_id>', methods=["POST","GET"])
 def pet_details(pet_id):
+    """takes us to our pet  detail page and handles edit if info is  edited!"""
+
     current_pet = Pet.query.get_or_404(pet_id)
+    form = EditPetForm()
+
+    if form.validate_on_submit():
+        photo_url = form.photo_url.data or None
+        age = form.age.data
+        notes = form.notes.data or None
+        available = form.available.data
+
+        if photo_url is not None:
+            current_pet.photo_url = photo_url
+
+        current_pet.age = age
+        current_pet.notes = notes
+        current_pet.available =  available
+
+        db.session.commit()
+
+    else:
+        return render_template('pet-details.html', pet=current_pet, form=form)
     
-    return render_template('pet-details.html', pet=current_pet)
+    return redirect("/")

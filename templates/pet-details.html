@@ -6,10 +6,11 @@
 <div>
   <img src="{{pet.photo_url}}" alt=""><br>
   <span><h3>AGE:</h3> {{pet.age}} </span><br>
- <span> <h3>SPECIES</h3> {{pet.species}}</span> <br>
+ <span> <h3>SPECIES:</h3> {{pet.species}}</span> <br>
+ <span><h3>NOTES:</h3> {{pet.notes}}</span>
 </div>
 <div><h1>Edit {{pet.name}}'s Info!</h1></div>
-<form id="edit-pet" action="" method="POST">
+<form id="edit-pet" method="POST">
   {{ form.hidden_tag() }} <!--add type=hidden form fields -->
 
   {% for field in form
