@@ -2,7 +2,11 @@
 
 {% block title %}<h1>MAX & BORIS ADOPTION AGENCY</h1>{% endblock %}
 
+
 {% block content %}
+<hr>
+<h2>Adopt A Pet Today!</h2>
+<hr>
 <div>
   {% for pet in pets %}
   <div>
@@ -10,7 +14,7 @@
     <a href="/{{pet.id}}">
       {{pet.name}}
     </a>
-     {% if pet.available %} <b> is available!</b> {% endif %}
+     {% if pet.available %} <b>  is available!</b> {% endif %}
   </div>
   {% endfor %}
   <br><a href="/add">Add pet</a>
